@@ -1,12 +1,21 @@
 """FastAPI application entrypoint."""
 
+import sys
+print("[BOOT] main.py loading...", flush=True)
+
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+print("[BOOT] importing settings...", flush=True)
 from app.config import settings
+print(f"[BOOT] APP_ENV={settings.app_env}, CORS={settings.cors_origins}", flush=True)
+print(f"[BOOT] DB URL prefix: {settings.database_url[:30]}...", flush=True)
+
+print("[BOOT] importing routers...", flush=True)
 from app.routers import aspects, auth, resumes
+print("[BOOT] all imports done!", flush=True)
 
 
 @asynccontextmanager
