@@ -1,0 +1,48 @@
+# Phase 3 — Frontend Interactive Wizard
+
+We have successfully built the core interactive frontend for the AI Resume Builder, connecting it to a blazing-fast, free-tier AI backend.
+
+## ✅ Phase 3 Complete: Core UI & State Management
+
+### 1. API Client ([api.ts](file:///c:/D%20resumebuilder/frontend/src/lib/api.ts))
+Built a robust Axios API client with customized error handling for connection issues, 422 validations, and 503 AI service unavailability. Features a typed `aspectApi.summarize()` function to hit our backend.
+
+### 2. Global State ([useResumeStore.ts](file:///c:/D%20resumebuilder/frontend/src/store/useResumeStore.ts))
+Implemented a Zustand store managing the entire multi-step wizard. It handles:
+- Step navigation (`currentStep`, [nextStep](file:///c:/D%20resumebuilder/frontend/src/store/useResumeStore.ts#131-135), [prevStep](file:///c:/D%20resumebuilder/frontend/src/store/useResumeStore.ts#136-140))
+- Form data for all resume aspects (Experience, Education, Skills, etc.) via the [AspectEntry](file:///c:/D%20resumebuilder/frontend/src/store/useResumeStore.ts#14-20) format (`raw_data`, `ai_summary`, `is_approved`)
+- Asynchronous AI generation state (`isAiLoading`, `aiError`)
+
+### 3. Wizard Layout ([layout.tsx](file:///c:/D%20resumebuilder/frontend/src/app/builder/layout.tsx))
+Built a polished, glassmorphic sidebar featuring:
+- Animated progress bar tracking wizard completion.
+- Interactive step indicators (Pending, Active, Completed).
+- Persistent bottom navigation bar ("Previous" and "Next Step").
+
+### 4. The End-to-End Loop ([ExperienceStep.tsx](file:///c:/D%20resumebuilder/frontend/src/components/wizard/ExperienceStep.tsx))
+The [ExperienceStep](file:///c:/D%20resumebuilder/frontend/src/components/wizard/ExperienceStep.tsx#6-315) implements the full AI loop:
+- A multi-entry form for work history (Company, Title, Dates, Raw Description).
+- A striking "Generate AI Summary" gradient button.
+- An interactive result panel where users can review the AI-generated bullet points, click "Regenerate", or "Approve" them to save to the store.
+
+---
+
+## ✅ Phase 3.6: AI Service Migration (Groq)
+
+After encountering billing/quota limits with OpenAI and Google Gemini's free tiers, we pivoted the backend to use **Groq**. 
+
+### Migration Details
+- **Provider:** Groq (100% free, 100% compatible with the OpenAI Python SDK)
+- **Model:** `llama-3.1-8b-instant` (Meta's highly capable Llama 3.1 model running on custom LPUs).
+- **Backend Updates:** Modified [app/config.py](file:///c:/D%20resumebuilder/backend/app/config.py), [.env](file:///c:/D%20resumebuilder/backend/.env), and [app/services/ai_service.py](file:///c:/D%20resumebuilder/backend/app/services/ai_service.py) to route all AI requests to `https://api.groq.com/openai/v1`.
+
+### 🎉 End-to-End Success
+
+The full stack pipeline is now working flawlessly:
+**Next.js Frontend ➔ FastAPI Backend ➔ Groq ➔ UI**
+
+Because we are using Groq, the AI text generation is practically instantaneous (under 2 seconds from click to result).
+
+![Groq AI Summarization Success](file:///C:/Users/Nk/.gemini/antigravity/brain/4ecfe934-f6b9-48eb-80c2-9ee569c36d89/groq_test_success_1772547852405.png)
+
+_Notice the "Regenerate" and "Approve" buttons appearing beneath the successfully generated AI bullet points!_
