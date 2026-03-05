@@ -14,7 +14,7 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from app.config import settings  # noqa: E402
-from app.database import Base  # noqa: E402
+from app.database import Base, _normalize_url  # noqa: E402
 
 # Import ALL models so Base.metadata knows about every table
 from app.models.user import User  # noqa: E402, F401
@@ -32,7 +32,7 @@ from app.models.aspects import (  # noqa: E402, F401
 config = context.config
 
 # Override sqlalchemy.url from our settings (so .env is the single source)
-config.set_main_option("sqlalchemy.url", settings.database_url)
+config.set_main_option("sqlalchemy.url", _normalize_url(settings.database_url))
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)

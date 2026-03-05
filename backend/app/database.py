@@ -5,9 +5,27 @@ from sqlalchemy.orm import DeclarativeBase
 
 from app.config import settings
 
+
+# ── Normalise the DATABASE_URL for asyncpg ────────────────────
+def _normalize_url(url: str) -> str:
+    """Ensure the URL uses the asyncpg driver and asyncpg-compatible params."""
+    # Fix driver prefix
+    if url.startswith("postgresql://"):
+        url = url.replace("postgresql://", "postgresql+asyncpg://", 1)
+    # asyncpg uses 'ssl' instead of 'sslmode'
+    url = url.replace("sslmode=", "ssl=")
+    # asyncpg does not support channel_binding
+    url = url.replace("&channel_binding=require", "")
+    url = url.replace("?channel_binding=require&", "?")
+    url = url.replace("?channel_binding=require", "")
+    return url
+
+
+_db_url = _normalize_url(settings.database_url)
+
 # ── Engine ────────────────────────────────────────────────────
 engine = create_async_engine(
-    settings.database_url,
+    _db_url,
     echo=(settings.app_env == "development"),
     future=True,
 )
