@@ -111,6 +111,7 @@ export default function HomePage() {
                         ✨ Start Building
                     </Link>
 
+                    {/*
                     <Link
                         href="/dashboard"
                         className="glass transition-smooth"
@@ -128,6 +129,7 @@ export default function HomePage() {
                     >
                         📄 My Resumes
                     </Link>
+                    */}
                 </div>
             </div>
 

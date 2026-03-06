@@ -58,7 +58,7 @@ export default function BuilderPage() {
             </div>
 
             {/* Navigation */}
-            <div className="flex justify-between items-center pt-4 border-t border-[var(--color-border)]">
+            <div className="flex justify-between items-center w-full mt-8 pt-6 border-t border-gray-700/50">
                 <button
                     onClick={prevStep}
                     disabled={isFirst}

@@ -26,7 +26,7 @@ export default function BuilderLayout({
     return (
         <div className="min-h-screen flex bg-[var(--color-bg)]">
             {/* ── Sidebar ────────────────────────────────────────── */}
-            <aside className="w-[300px] border-r border-[var(--color-border)] flex flex-col glass sticky top-0 h-screen">
+            <aside className="hidden md:flex w-[300px] border-r border-[var(--color-border)] flex-col glass sticky top-0 h-screen">
                 {/* Logo */}
                 <div className="px-6 pt-7 pb-2">
                     <a href="/" className="flex items-center gap-2 no-underline">
@@ -116,8 +116,8 @@ export default function BuilderLayout({
             </aside>
 
             {/* ── Main content ───────────────────────────────────── */}
-            <main className="flex-1 overflow-y-auto">
-                <div className="max-w-3xl mx-auto px-8 py-10">{children}</div>
+            <main className="flex-1 overflow-y-auto flex justify-center">
+                <div className="w-full max-w-3xl mx-auto p-4 sm:p-8">{children}</div>
             </main>
         </div>
     );

@@ -89,7 +89,7 @@ export default function ExperienceStep() {
 
                     {/* Form fields */}
                     <div className="px-6 py-5 space-y-4">
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {/* Company */}
                             <div className="space-y-1.5">
                                 <label className="block text-xs font-semibold text-[var(--color-text-muted)] uppercase tracking-wider">
@@ -127,7 +127,7 @@ export default function ExperienceStep() {
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-3 gap-4">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             {/* Location */}
                             <div className="space-y-1.5">
                                 <label className="block text-xs font-semibold text-[var(--color-text-muted)] uppercase tracking-wider">
